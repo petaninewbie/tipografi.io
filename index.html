@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Typography Playground + Kuis</title>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Poppins:wght@300;600&family=Courier+Prime&display=swap" rel="stylesheet">
+    <title>Web Design Masterclass: Type, Color, Layout</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Poppins:wght@300;600&family=Courier+Prime&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     
     <style>
         /* --- CSS VARIABLES --- */
         :root {
             --primary: #6C63FF;
-            --success: #2ecc71;
-            --error: #e74c3c;
+            --secondary: #eee;
             --bg: #F0F2F5;
             --card-bg: #ffffff;
             --text: #333333;
@@ -19,10 +18,15 @@
             --font-body: 'Poppins', sans-serif;
             --lh: 1.6;
             --spacing: 0px;
+            
+            /* Variables untuk Layout Demo */
+            --grid-cols: 1;
+            --grid-gap: 20px;
+            --box-color: #EEEDFF;
         }
 
         /* --- RESET & LAYOUT --- */
-        * { box-sizing: border-box; margin: 0; padding: 0; transition: all 0.3s ease; }
+        * { box-sizing: border-box; margin: 0; padding: 0; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
         
         body {
             font-family: 'Poppins', sans-serif;
@@ -36,9 +40,9 @@
         }
 
         .presentation-container {
-            width: 90%;
-            max-width: 1000px;
-            height: 85vh;
+            width: 95%;
+            max-width: 1100px;
+            height: 90vh;
             background: var(--card-bg);
             border-radius: 20px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.1);
@@ -56,37 +60,48 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            overflow-y: auto; /* Scroll jika konten panjang */
         }
 
-        .controls-panel h2 { font-size: 1.8rem; margin-bottom: 10px; color: var(--primary); }
-        .controls-panel p { font-size: 0.9rem; color: #666; margin-bottom: 30px; line-height: 1.5; }
+        .controls-panel h2 { font-size: 1.6rem; margin-bottom: 10px; color: var(--primary); }
+        .controls-panel p { font-size: 0.9rem; color: #666; margin-bottom: 25px; line-height: 1.5; }
         
         .control-group { margin-bottom: 20px; }
-        .control-group label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; }
+        .control-group label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.85rem; }
         
-        input[type="range"] { width: 100%; accent-color: var(--primary); }
+        input[type="range"] { width: 100%; accent-color: var(--primary); cursor: pointer; }
         
-        .btn-group { display: flex; gap: 10px; }
+        /* Button Styles */
+        .btn-group { display: flex; flex-wrap: wrap; gap: 8px; }
         button.option-btn {
             flex: 1;
+            min-width: 80px;
             padding: 10px;
-            border: 2px solid #ddd;
+            border: 2px solid #e0e0e0;
             background: white;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
+            color: #555;
         }
-        button.option-btn:hover, button.option-btn.active {
+        button.option-btn:hover { background: #f5f5f5; }
+        button.option-btn.active {
             border-color: var(--primary);
-            background: #EEEDFF;
-            color: var(--primary);
-            font-weight: bold;
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
         }
+
+        /* Color Circles for Slide 3 */
+        .color-dots { display: flex; gap: 15px; margin-top: 10px; }
+        .dot { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 3px solid transparent; }
+        .dot:hover { transform: scale(1.1); }
+        .dot.active { border-color: #333; transform: scale(1.2); }
 
         /* --- LAYAR PREVIEW (KANAN) --- */
         .preview-panel {
             width: 65%;
-            padding: 60px;
+            padding: 50px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -100,6 +115,7 @@
             font-size: 2.5rem;
             margin-bottom: 1rem;
             line-height: 1.2;
+            color: var(--primary); /* Ikut tema */
         }
         
         .preview-content p {
@@ -112,7 +128,34 @@
             opacity: 0.9;
         }
 
-        /* --- QUIZ STYLES --- */
+        /* --- LAYOUT DEMO STYLES (SLIDE 4) --- */
+        .layout-grid {
+            display: grid;
+            grid-template-columns: var(--grid-cols);
+            gap: var(--grid-gap);
+            width: 100%;
+            height: 400px;
+            border: 2px dashed #ddd; /* Invisible Grid Border */
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .layout-grid.show-lines { border-color: var(--primary); background: rgba(108, 99, 255, 0.05); }
+        
+        .layout-item {
+            background: var(--box-color);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .layout-item.img-placeholder { background: #ddd; min-height: 150px; }
+        .layout-item h3 { margin-bottom: 10px; color: var(--primary); }
+
+        /* --- QUIZ STYLES (SLIDE 5) --- */
         .quiz-option {
             width: 100%;
             padding: 15px;
@@ -123,25 +166,11 @@
             text-align: left;
             cursor: pointer;
             font-size: 1rem;
-            color: #333;
         }
-        .quiz-option:hover { border-color: var(--primary); background: #f9f9ff; }
-        
-        .quiz-option.correct { background: #d4edda; border-color: var(--success); color: #155724; }
-        .quiz-option.wrong { background: #f8d7da; border-color: var(--error); color: #721c24; }
-
-        .score-board {
-            text-align: center;
-            display: none;
-        }
-        .score-board h3 { font-size: 3rem; color: var(--primary); margin-bottom: 10px; }
-        
-        .feedback-text {
-            min-height: 20px;
-            font-weight: bold;
-            margin-top: 10px;
-            font-size: 0.9rem;
-        }
+        .quiz-option.correct { background: #d4edda; border-color: #2ecc71; color: #155724; }
+        .quiz-option.wrong { background: #f8d7da; border-color: #e74c3c; color: #721c24; }
+        .score-board { text-align: center; display: none; }
+        .score-board h3 { font-size: 3rem; color: var(--primary); }
 
         /* --- NAVIGASI SLIDE --- */
         .slide { display: none; height: 100%; width: 100%; }
@@ -149,11 +178,11 @@
 
         .nav-buttons {
             position: absolute;
-            bottom: 20px;
-            right: 20px;
+            bottom: 25px;
+            right: 25px;
             display: flex;
             gap: 15px;
-            z-index: 10;
+            z-index: 100;
         }
         
         .nav-btn {
@@ -164,15 +193,11 @@
             border-radius: 30px;
             cursor: pointer;
             font-weight: 600;
-            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
         .nav-btn:disabled { background: #ccc; cursor: not-allowed; box-shadow: none; }
+        .nav-btn.secondary { background: white; color: var(--text); border: 1px solid #ccc; box-shadow: none; }
 
-        /* DARK MODE */
-        .dark-mode { --bg: #1a1a1a; --card-bg: #2d2d2d; --text: #f0f0f0; }
-        .dark-mode .controls-panel { background: #252525; border-right: 1px solid #333; }
-        .dark-mode .quiz-option { background: #333; border-color: #444; color: #fff; }
-        .dark-mode .quiz-option:hover { background: #444; }
     </style>
 </head>
 <body>
@@ -181,63 +206,103 @@
     
     <div class="slide active" id="slide1">
         <div class="controls-panel">
-            <h2>1. Apa itu Tipografi?</h2>
-            <p>Font adalah "suara" website. Pilih font di bawah untuk mendengar perbedaannya.</p>
+            <h2>1. Tipografi & Font</h2>
+            <p>Font menentukan "suara" website. Serius, santai, atau teknis?</p>
             <div class="control-group">
-                <label>Gaya Tulisan:</label>
+                <label>Pilih Gaya Font:</label>
                 <div class="btn-group">
-                    <button class="option-btn active" onclick="setFont('Poppins', 'Poppins')">Modern (Sans)</button>
-                    <button class="option-btn" onclick="setFont('Merriweather', 'Merriweather')">Klasik (Serif)</button>
-                    <button class="option-btn" onclick="setFont('Courier Prime', 'Courier Prime')">Koding (Mono)</button>
+                    <button class="option-btn active" onclick="setFont('Poppins', 'Poppins', this)">Modern (Sans)</button>
+                    <button class="option-btn" onclick="setFont('Merriweather', 'Merriweather', this)">Klasik (Serif)</button>
+                    <button class="option-btn" onclick="setFont('Courier Prime', 'Courier Prime', this)">Teknis (Mono)</button>
                 </div>
+            </div>
+            <div class="control-group">
+                <label>Jarak Baris (Line Height):</label>
+                <input type="range" min="1" max="2.2" step="0.1" value="1.6" oninput="updateSpacing(this.value)">
             </div>
         </div>
         <div class="preview-panel">
             <div class="preview-content">
-                <h1>Halo Siswa!</h1>
-                <p>Tipografi adalah seni menyusun huruf. Font yang kamu pilih menentukan apakah desainmu terlihat modern, kuno, atau profesional.</p>
-                <p>Perhatikan bentuk huruf pada judul di atas.</p>
+                <h1>Halo, Desainer Muda!</h1>
+                <p>Ini adalah contoh paragraf. Tipografi yang baik membuat pembaca betah berlama-lama. Perhatikan bagaimana karakter tulisan berubah saat tombol ditekan.</p>
+                <p>Jangan lupa mengatur spasi agar tulisan bisa "bernapas".</p>
             </div>
         </div>
     </div>
 
     <div class="slide" id="slide2">
         <div class="controls-panel">
-            <h2>2. Keterbacaan</h2>
-            <p>Jarak antar baris (Line Height) sangat penting. Jangan terlalu rapat!</p>
+            <h2>2. Warna & Emosi</h2>
+            <p>Warna bukan sekadar hiasan. Warna menciptakan <strong>suasana (mood)</strong>. Coba ganti tema di bawah:</p>
+            
             <div class="control-group">
-                <label>Jarak Baris: <span id="lh-val">1.6</span></label>
-                <input type="range" min="0.8" max="2.5" step="0.1" value="1.6" oninput="updateSpacing(this.value, 'lh')">
+                <label>Tema Warna:</label>
+                <div class="btn-group">
+                    <button class="option-btn active" onclick="setTheme('corp', this)">Bisnis (Biru)</button>
+                    <button class="option-btn" onclick="setTheme('fun', this)">Ceria (Oranye)</button>
+                    <button class="option-btn" onclick="setTheme('lux', this)">Mewah (Emas)</button>
+                    <button class="option-btn" onclick="setTheme('dark', this)">Cyber (Gelap)</button>
+                </div>
             </div>
-            <div class="control-group">
-                <label>Jarak Huruf: <span id="ls-val">0px</span></label>
-                <input type="range" min="-2" max="5" step="0.5" value="0" oninput="updateSpacing(this.value, 'ls')">
+
+            <div class="control-group" style="margin-top: 20px; padding: 15px; background: #eee; border-radius: 8px;">
+                <label>Info Psikologi Warna:</label>
+                <p id="color-info" style="margin:0; font-size: 0.85rem;"><strong>Biru:</strong> Kepercayaan, profesional, tenang. Sering dipakai bank & teknologi.</p>
             </div>
         </div>
         <div class="preview-panel">
-            <div class="preview-content">
-                <h1>Ruang Bernapas</h1>
-                <p>Teks yang terlalu rapat membuat mata cepat lelah. Bayangkan membaca buku yang barisnya saling menempel.</p>
-                <p>Sebaliknya, jika terlalu renggang, mata harus melompat jauh. Carilah posisi yang paling nyaman.</p>
+            <div class="preview-content" style="border: 1px solid #eee; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+                <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--primary); font-weight: bold;">Portfolio Saya</span>
+                <h1 style="margin-top: 10px;">Desain Masa Depan</h1>
+                <p>Warna latar belakang dan warna teks bekerja sama menciptakan kontras. Jika kontras buruk, mata akan sakit.</p>
+                <button style="background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-weight: bold;">Hubungi Saya</button>
             </div>
         </div>
     </div>
 
     <div class="slide" id="slide3">
         <div class="controls-panel">
-            <h2>3. Kontras & Warna</h2>
-            <p>Pastikan teks terbaca jelas di atas latar belakangnya.</p>
+            <h2>3. Tata Letak (Layout)</h2>
+            <p>Bagaimana kita menyusun kotak-kotak informasi? Website modern menggunakan <strong>Grid System</strong>.</p>
+            
             <div class="control-group">
+                <label>Pilih Struktur Layout:</label>
                 <div class="btn-group">
-                    <button class="option-btn active" onclick="toggleTheme(false, this)">Light Mode</button>
-                    <button class="option-btn" onclick="toggleTheme(true, this)">Dark Mode</button>
+                    <button class="option-btn active" onclick="setLayout('1fr', this)">Single Column</button>
+                    <button class="option-btn" onclick="setLayout('1fr 1fr', this)">Split Screen</button>
+                    <button class="option-btn" onclick="setLayout('1fr 1fr 1fr', this)">3 Column Grid</button>
                 </div>
+            </div>
+
+            <div class="control-group">
+                <label>Alat Bantu:</label>
+                <button class="option-btn" id="btn-grid-lines" onclick="toggleGridLines()" style="width: 100%;">Tampilkan Garis Grid (Invisible Lines)</button>
             </div>
         </div>
         <div class="preview-panel">
-            <div class="preview-content">
-                <h1>Gelap vs Terang</h1>
-                <p>Pada mode gelap (Dark Mode), kita jarang menggunakan warna hitam pekat (#000000) atau putih pekat (#FFFFFF) karena kontrasnya terlalu tajam dan menyakitkan mata.</p>
+            <div class="layout-grid" id="demo-grid">
+                <div class="layout-item">
+                    <h3>Judul 1</h3>
+                    <p style="font-size: 0.8rem;">Konten pengantar di sini.</p>
+                </div>
+                <div class="layout-item img-placeholder">
+                    <span>Gambar</span>
+                </div>
+                <div class="layout-item">
+                    <h3>Judul 2</h3>
+                    <p style="font-size: 0.8rem;">Detail tambahan.</p>
+                </div>
+                <div class="layout-item">
+                    <h3>Judul 3</h3>
+                    <p style="font-size: 0.8rem;">Info kontak.</p>
+                </div>
+                 <div class="layout-item img-placeholder">
+                    <span>Gambar</span>
+                </div>
+                 <div class="layout-item">
+                    <h3>Footer</h3>
+                    <p style="font-size: 0.8rem;">Hak Cipta.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -245,160 +310,158 @@
     <div class="slide" id="slide4">
         <div class="controls-panel">
             <h2>Uji Pemahaman</h2>
-            <p>Jawab pertanyaan di samping untuk melihat seberapa jauh kamu paham!</p>
-            <p id="quiz-status">Pertanyaan 1 dari 3</p>
-            <p class="feedback-text" id="feedback"></p>
+            <p>Sudah paham tentang Font, Warna, dan Layout? Buktikan!</p>
+            <p id="quiz-status" style="font-weight: bold; color: var(--primary);">Pertanyaan 1</p>
+            <p id="feedback" style="font-weight: bold; min-height: 20px;"></p>
         </div>
         <div class="preview-panel">
-            <div id="quiz-active" style="width: 100%; max-width: 500px;">
-                <h3 id="question-text" style="margin-bottom: 20px; font-size: 1.5rem;">Soal akan muncul di sini...</h3>
+            <div id="quiz-active" style="width: 100%; max-width: 600px;">
+                <h3 id="question-text" style="margin-bottom: 25px;">Soal...</h3>
                 <div id="options-container"></div>
             </div>
 
             <div id="quiz-result" class="score-board">
-                <p>Skor Kamu:</p>
-                <h3 id="final-score">0</h3>
-                <p id="score-message">Luar biasa!</p>
-                <button class="nav-btn" style="margin-top:20px;" onclick="resetQuiz()">Coba Lagi</button>
+                <p>Skor Akhir:</p>
+                <h3 id="final-score">0/100</h3>
+                <p id="score-message" style="margin-bottom: 20px;">Hebat!</p>
+                <button class="nav-btn" onclick="resetQuiz()">Ulangi Kuis</button>
             </div>
         </div>
     </div>
 
     <div class="nav-buttons">
-        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)" disabled>← Kembali</button>
+        <button class="nav-btn secondary" id="prevBtn" onclick="changeSlide(-1)" disabled>← Kembali</button>
         <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Selanjutnya →</button>
     </div>
 
 </div>
 
 <script>
-    /* --- LOGIKA PRESENTASI --- */
+    /* --- CONFIGURATION --- */
     let currentSlide = 1;
     const totalSlides = 4;
 
-    function changeSlide(direction) {
+    /* --- NAVIGATION LOGIC --- */
+    function changeSlide(dir) {
         document.getElementById(`slide${currentSlide}`).classList.remove('active');
-        currentSlide += direction;
+        currentSlide += dir;
         document.getElementById(`slide${currentSlide}`).classList.add('active');
         
-        // Atur tombol
+        // Button States
         document.getElementById('prevBtn').disabled = (currentSlide === 1);
-        
         const nextBtn = document.getElementById('nextBtn');
-        if(currentSlide === totalSlides) {
-            nextBtn.style.display = 'none'; // Sembunyikan tombol next di slide kuis
+        
+        if (currentSlide === totalSlides) {
+            nextBtn.style.display = 'none'; // Hide next button on quiz
         } else {
             nextBtn.style.display = 'block';
-            nextBtn.innerText = (currentSlide === 3) ? "Mulai Kuis →" : "Selanjutnya →";
-        }
-
-        // Reset Dark Mode saat masuk slide kuis agar teks jelas (opsional)
-        if(currentSlide === 4) {
-             const container = document.querySelector('.presentation-container');
-             // container.classList.remove('dark-mode'); // Uncomment jika ingin auto-light mode saat kuis
+            nextBtn.innerText = (currentSlide === totalSlides - 1) ? "Mulai Kuis 🎓" : "Selanjutnya →";
         }
     }
 
-    function setFont(displayFont, bodyFont) {
-        document.documentElement.style.setProperty('--font-display', displayFont);
-        document.documentElement.style.setProperty('--font-body', bodyFont);
+    /* --- SLIDE 1: TYPOGRAPHY --- */
+    function setFont(display, body, btn) {
+        document.documentElement.style.setProperty('--font-display', display);
+        document.documentElement.style.setProperty('--font-body', body);
         
-        const buttons = document.querySelectorAll('#slide1 .option-btn');
-        buttons.forEach(btn => btn.classList.remove('active'));
-        event.target.classList.add('active');
+        // Reset active buttons in this group
+        btn.parentNode.querySelectorAll('.option-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
     }
 
-    function updateSpacing(val, type) {
-        if(type === 'lh') {
-            document.documentElement.style.setProperty('--lh', val);
-            document.getElementById('lh-val').innerText = val;
-        } else {
-            document.documentElement.style.setProperty('--spacing', val + 'px');
-            document.getElementById('ls-val').innerText = val + 'px';
-        }
+    function updateSpacing(val) {
+        document.documentElement.style.setProperty('--lh', val);
     }
 
-    function toggleTheme(isDark, btnElement) {
-        const container = document.querySelector('.presentation-container');
-        const btns = document.querySelectorAll('#slide3 .option-btn');
-        btns.forEach(b => b.classList.remove('active'));
-        btnElement.classList.add('active');
-        isDark ? container.classList.add('dark-mode') : container.classList.remove('dark-mode');
+    /* --- SLIDE 2: COLOR THEMES --- */
+    const themes = {
+        corp: { prim: '#0056b3', bg: '#F0F2F5', text: '#333', info: "Biru: Kepercayaan, profesional, stabil." },
+        fun:  { prim: '#FF6B6B', bg: '#FFF4E6', text: '#4A4A4A', info: "Oranye: Ceria, energik, kreatif, ramah." },
+        lux:  { prim: '#D4AF37', bg: '#111', text: '#f0f0f0', info: "Hitam & Emas: Eksklusif, mahal, elegan." },
+        dark: { prim: '#00FF94', bg: '#0A0A0A', text: '#E0E0E0', info: "Neon & Gelap: Cyberpunk, futuristik, teknologi." }
+    };
+
+    function setTheme(key, btn) {
+        const t = themes[key];
+        const root = document.documentElement;
+        
+        root.style.setProperty('--primary', t.prim);
+        root.style.setProperty('--bg', t.bg);
+        root.style.setProperty('--card-bg', key === 'dark' || key === 'lux' ? '#1f1f1f' : '#ffffff');
+        root.style.setProperty('--text', t.text);
+        
+        document.getElementById('color-info').innerHTML = `<strong>Psikologi:</strong> ${t.info}`;
+
+        btn.parentNode.querySelectorAll('.option-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
     }
 
-    /* --- LOGIKA KUIS --- */
+    /* --- SLIDE 3: LAYOUT --- */
+    function setLayout(cols, btn) {
+        document.documentElement.style.setProperty('--grid-cols', cols);
+        btn.parentNode.querySelectorAll('.option-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
+    function toggleGridLines() {
+        document.getElementById('demo-grid').classList.toggle('show-lines');
+        const btn = document.getElementById('btn-grid-lines');
+        btn.classList.toggle('active');
+    }
+
+    /* --- SLIDE 4: QUIZ --- */
     const questions = [
-        {
-            q: "Jenis font apa yang memiliki 'kaki' kecil di ujung huruf dan berkesan klasik?",
-            a: ["Sans Serif", "Serif", "Monospace"],
-            correct: 1 // Index jawaban benar (Serif)
-        },
-        {
-            q: "Apa yang terjadi jika Line Height (jarak baris) terlalu kecil?",
-            a: ["Teks jadi sulit dibaca dan sesak", "Teks jadi lebih modern", "Warna teks berubah"],
-            correct: 0 
-        },
-        {
-            q: "Dalam Dark Mode, warna teks apa yang paling nyaman di mata?",
-            a: ["Putih terang 100%", "Hitam pekat", "Abu-abu terang / Putih lembut"],
-            correct: 2 
-        }
+        { q: "Font jenis apa yang memberi kesan klasik dan formal?", a: ["Sans Serif", "Serif", "Comic Sans"], correct: 1 },
+        { q: "Warna apa yang paling cocok untuk website Bank (Terpercaya)?", a: ["Merah Terang", "Neon Hijau", "Biru Tua"], correct: 2 },
+        { q: "Apa nama sistem kotak-kotak tak terlihat untuk merapikan layout?", a: ["Grid System", "Brick System", "Box Model"], correct: 0 },
+        { q: "Agar teks mudah dibaca, kita harus mengatur...?", a: ["Warna yang sama dengan background", "Line Height (Spasi Baris)", "Ukuran font sekecil mungkin"], correct: 1 }
     ];
 
-    let currentQ = 0;
+    let qIndex = 0;
     let score = 0;
-    let canAnswer = true;
 
     function loadQuestion() {
-        canAnswer = true;
+        const q = questions[qIndex];
+        document.getElementById('question-text').innerText = q.q;
+        document.getElementById('quiz-status').innerText = `Soal ${qIndex + 1} dari ${questions.length}`;
         document.getElementById('feedback').innerText = "";
-        document.getElementById('feedback').style.color = "inherit";
-        document.getElementById('quiz-status').innerText = `Pertanyaan ${currentQ + 1} dari ${questions.length}`;
         
-        const qData = questions[currentQ];
-        document.getElementById('question-text').innerText = qData.q;
+        const container = document.getElementById('options-container');
+        container.innerHTML = "";
         
-        const optsDiv = document.getElementById('options-container');
-        optsDiv.innerHTML = ""; // Bersihkan opsi lama
-        
-        qData.a.forEach((opt, index) => {
+        q.a.forEach((opt, i) => {
             const btn = document.createElement('button');
             btn.className = 'quiz-option';
             btn.innerText = opt;
-            btn.onclick = () => checkAnswer(index, btn);
-            optsDiv.appendChild(btn);
+            btn.onclick = () => checkAnswer(i, btn);
+            container.appendChild(btn);
         });
     }
 
-    function checkAnswer(selectedIndex, btnElement) {
-        if(!canAnswer) return;
-        canAnswer = false;
+    function checkAnswer(ansIndex, btn) {
+        // Disable clicks
+        const opts = document.querySelectorAll('.quiz-option');
+        opts.forEach(o => o.style.pointerEvents = 'none');
 
-        const correctIndex = questions[currentQ].correct;
-        const feedbackEl = document.getElementById('feedback');
+        const correct = questions[qIndex].correct;
+        const feedback = document.getElementById('feedback');
 
-        if(selectedIndex === correctIndex) {
+        if (ansIndex === correct) {
             score++;
-            btnElement.classList.add('correct');
-            feedbackEl.innerText = "Yey! Jawaban Benar 🎉";
-            feedbackEl.style.color = "var(--success)";
+            btn.classList.add('correct');
+            feedback.innerText = "Benar! 🎉";
+            feedback.style.color = "#2ecc71";
         } else {
-            btnElement.classList.add('wrong');
-            // Highlight yang benar
-            const opts = document.querySelectorAll('.quiz-option');
-            opts[correctIndex].classList.add('correct');
-            feedbackEl.innerText = "Yah, kurang tepat 😅";
-            feedbackEl.style.color = "var(--error)";
+            btn.classList.add('wrong');
+            opts[correct].classList.add('correct');
+            feedback.innerText = "Kurang tepat... 😅";
+            feedback.style.color = "#e74c3c";
         }
 
-        // Lanjut soal otomatis setelah 1.5 detik
         setTimeout(() => {
-            currentQ++;
-            if(currentQ < questions.length) {
-                loadQuestion();
-            } else {
-                showResult();
-            }
+            qIndex++;
+            if (qIndex < questions.length) loadQuestion();
+            else showResult();
         }, 1500);
     }
 
@@ -406,26 +469,19 @@
         document.getElementById('quiz-active').style.display = 'none';
         document.getElementById('quiz-result').style.display = 'block';
         document.getElementById('final-score').innerText = `${score} / ${questions.length}`;
-        document.getElementById('quiz-status').innerText = "Kuis Selesai";
-        document.getElementById('feedback').innerText = "";
-
-        const msg = document.getElementById('score-message');
-        if(score === 3) msg.innerText = "Sempurna! Kamu jago tipografi! 🌟";
-        else if(score === 2) msg.innerText = "Bagus! Sedikit lagi sempurna 👍";
-        else msg.innerText = "Belajar lagi ya, jangan menyerah! 💪";
+        document.getElementById('quiz-status').innerText = "Selesai!";
     }
 
     function resetQuiz() {
-        currentQ = 0;
+        qIndex = 0;
         score = 0;
-        document.getElementById('quiz-result').style.display = 'none';
         document.getElementById('quiz-active').style.display = 'block';
+        document.getElementById('quiz-result').style.display = 'none';
         loadQuestion();
     }
 
-    // Mulai kuis pertama kali
+    // Init
     loadQuestion();
-
 </script>
 
 </body>
